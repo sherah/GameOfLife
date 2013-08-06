@@ -11,7 +11,7 @@ $(document).ready(function(){
         gridValues         = $('#gridValues').val(); //TODO: refactor to accept lines when making compatible with stdin/stdout
 
     //kick off the algorithm for the game
-    var results = runGame(numberOfIterations, gridHeight, gridWidth, values);
+    var results = runGame(numberOfIterations, gridHeight, gridWidth, gridValues);
 
     //display the results
     displayGame(results);
@@ -21,25 +21,40 @@ $(document).ready(function(){
   });
 
   var runGame = function(n, h, w, v){
-    var result = [];
+    var resultGrid = [];
+
+    //form the grid (TODO: split out correctly/handle lines)
+    resultGrid.push(v.split(" "));
 
     //do this n times
     for(var i = 0; i <= n; i++){
+      //iterate through the grid:
 
-      //if this index's value is 0
-        //get all its neighbor's values
-          //if there are exactly 3 1's, turn this index into a 1
+        //if this index's value is 0
+        if(parseInt(resultGrid[i]) === 0){
+          //get all its neighbor's values
+            getNeighborValues(i, resultGrid);
+            //if there are exactly 3 1's, turn this index into a 1
 
+        } else if(parseInt(resultGrid[i]) === 1) {
 
-
-      //if this index's value is 1
-        //get all its neighbor's values
-          //if there are 2 or 3 neighbors, stay a 1
-          //else change to 0
+        //if this index's value is 1
+          //get all its neighbor's values
+            getNeighborValues(i, resultGrid);
+            //if there are 2 or 3 neighbors, stay a 1
+            //else change to 0
+        } else {
+          return "error.";
+        }
 
     }
 
-    return result;
+    return resultGrid;
+  };
+
+  var getNeighborValues = function(i, grid){
+    //the major work
+
   };
 
   var displayGame = function(r){
