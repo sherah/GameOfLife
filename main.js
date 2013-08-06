@@ -22,9 +22,17 @@ $(document).ready(function(){
 
   var runGame = function(n, h, w, v){
     var resultGrid = [];
+        resultArray = [];
 
-    //form the grid (TODO: split out correctly/handle lines)
-    resultGrid.push(v.split(" "));
+    //split values into an array.
+    resultArray.push(v.split(" "));
+
+    //make the array a grid. TODO this is wrong
+    resultGrid.push(resultArray.slice(0, w));
+    for(var j = 0; j <= h; j++){
+      var row = resultArray.slice( (j+n), (j+n+n) );
+      resultGrid.push(row);
+    }
 
     //do this n times
     for(var i = 0; i <= n; i++){
@@ -53,8 +61,10 @@ $(document).ready(function(){
   };
 
   var getNeighborValues = function(i, grid){
-    //the major work
+    //make an array to hold all this index's neighbor 1's and 0's to send back to main function
+    var neighborArray = [];
 
+    return neighborArray;
   };
 
   var displayGame = function(r){
