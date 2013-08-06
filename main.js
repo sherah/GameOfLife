@@ -27,42 +27,44 @@ $(document).ready(function(){
     //split values into an array.
     resultArray.push(v.split(" "));
 
-    //make the array a grid. TODO this is wrong
-    resultGrid.push(resultArray.slice(0, w));
-    for(var j = 0; j <= h; j++){
-      var row = resultArray.slice( (j+w), (j+w+w) );
-      resultGrid.push(row);
-    }
+    //make the array a grid.
+    //in the interest of time, I will pseudocode the rest!
+    //get a two-dimensional array going. that array is constructed based on the
+    //height and width specified in the input.
 
     //do this n times
     for(var i = 0; i <= n; i++){
       //iterate through the grid:
+        //for var j (this row)
+          //for var k (this index)
+            //if this index's value is 0
+            if(parseInt(resultGrid[i]) === 0){
+              //get all its neighbor's values
+                getNeighborValues(resultGrid, resultGrid[j][k]);
+                //if there are exactly 3 1's, turn this index into a 1
 
-        //if this index's value is 0
-        if(parseInt(resultGrid[i]) === 0){
-          //get all its neighbor's values
-            getNeighborValues(i, resultGrid);
-            //if there are exactly 3 1's, turn this index into a 1
+            } else if(parseInt(resultGrid[i]) === 1) {
 
-        } else if(parseInt(resultGrid[i]) === 1) {
-
-        //if this index's value is 1
-          //get all its neighbor's values
-            getNeighborValues(i, resultGrid);
-            //if there are 2 or 3 neighbors, stay a 1
-            //else change to 0
-        } else {
-          return "error.";
-        }
+            //if this index's value is 1
+              //get all its neighbor's values
+                getNeighborValues(resultGrid, resultGrid[j][k]);
+                //if there are 2 or 3 neighbors, stay a 1
+                //else change to 0
+            } else {
+              return "error.";
+            }
 
     }
 
     return resultGrid;
   };
 
-  var getNeighborValues = function(i, grid){
+  var getNeighborValues = function(grid, gridIndex){
     //make an array to hold all this index's neighbor 1's and 0's to send back to main function
     var neighborArray = [];
+
+    //push the gridIndex's preceding value (gridIndex[j][k-1]) or, if that would be less than 0, get this row's last value.
+    //push the gridIndex's preceding value (gridIndex[j][k+1]) or, if that would be greater than the width, get this row's first value.
 
     return neighborArray;
   };
