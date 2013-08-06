@@ -30,7 +30,7 @@ $(document).ready(function(){
     //make the array a grid. TODO this is wrong
     resultGrid.push(resultArray.slice(0, w));
     for(var j = 0; j <= h; j++){
-      var row = resultArray.slice( (j+n), (j+n+n) );
+      var row = resultArray.slice( (j+w), (j+w+w) );
       resultGrid.push(row);
     }
 
