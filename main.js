@@ -40,14 +40,14 @@ $(document).ready(function(){
             //if this index's value is 0
             if(parseInt(resultGrid[i]) === 0){
               //get all its neighbor's values
-                getNeighborValues(resultGrid, resultGrid[j][k]);
+                var neighbors = getNeighborValues(resultGrid, resultGrid[j][k]);
                 //if there are exactly 3 1's, turn this index into a 1
 
             } else if(parseInt(resultGrid[i]) === 1) {
 
             //if this index's value is 1
               //get all its neighbor's values
-                getNeighborValues(resultGrid, resultGrid[j][k]);
+                var neighbors = getNeighborValues(resultGrid, resultGrid[j][k]);
                 //if there are 2 or 3 neighbors, stay a 1
                 //else change to 0
             } else {
@@ -65,7 +65,11 @@ $(document).ready(function(){
 
     //push the gridIndex's preceding value (gridIndex[j][k-1]) or, if that would be less than 0, get this row's last value.
     //push the gridIndex's preceding value (gridIndex[j][k+1]) or, if that would be greater than the width, get this row's first value.
+    //push the gridIndex's preceding row/index value (gridIndex[j-1][k]), or if j-1 is less than 0, get the last row's k value.
+    //push the gridIndex's preceding row/index value (gridIndex[j+1][k]), or if j+1 is greater than the length of the j arrays, get the first j row's k value.
+    //get diagonals
 
+    //these are all pushed to the neighborArray and returned:
     return neighborArray;
   };
 
