@@ -8,6 +8,7 @@ $(document).ready(function(){
     var numberOfIterations = $('#numberOfIterations').val();
         gridWidth          = $('#gridWidth').val();
         gridHeight         = $('#gridHeight').val();
+        gridValues         = $('#gridValues').val();
 
     //kick off the algorithm for the game
     var results = runGame(numberOfIterations, gridHeight, gridWidth);
