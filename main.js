@@ -6,11 +6,10 @@ $(document).ready(function(){
     event.preventDefault();
 
     if(thisGrid.length > 0){
-      thisGrid.push($(".gridValues" + (thisGrid.length + 1)).val());
+      thisGrid.push($(".gridValues" + (thisGrid.length + 1)).val().split(" "));
     } else {
-      thisGrid.push($(".gridValues").val());
+      thisGrid.push($(".gridValues").val().split(" "));
     }
-    console.log(thisGrid);
 
     $('.lines').append("<input type='text' class='gridValues" + (thisGrid.length + 1) + "' placeholder='line values, separated by spaces'><br>");
 
@@ -25,7 +24,7 @@ $(document).ready(function(){
     var numberOfIterations = $('#numberOfIterations').val();
         gridWidth          = $('#gridWidth').val();
         gridHeight         = $('#gridHeight').val();
-        //gridValues         =  //TODO: refactor to accept lines when making compatible with stdin/stdout
+        gridValues         = thisGrid; //TODO: refactor to accept lines when making compatible with stdin/stdout
 
     //kick off the algorithm for the game
     var results = runGame(numberOfIterations, gridHeight, gridWidth, gridValues);
@@ -38,16 +37,29 @@ $(document).ready(function(){
   });
 
   var runGame = function(n, h, w, v){
-    var resultGrid = [];
-        resultArray = [];
+    var crazyGrid = [];
+        resultGrid = [];
 
-    //split values into an array.
-    resultArray.push(v.split(" "));
+    //create a crazyGrid that keeps the values of the surrounding spaces easily.
+    //the idea I have going is that, to wrap around the grid, I can surround the
+    //working grid with 8 copies of itself. ie:
 
-    //make the array a grid.
-    //in the interest of time, I will pseudocode the rest!
-    //get a two-dimensional array going. that array is constructed based on the
-    //height and width specified in the input.
+    //// 1 1 1  1 1 1  1 1 1
+    //// 0 0 0  0 0 0  0 0 0
+    //// 1 1 1  1 1 1  1 1 1
+
+    //// 1 1 1  1 1 1  1 1 1
+    //// 0 0 0  0 0 0  0 0 0
+    //// 1 1 1  1 1 1  1 1 1
+
+    //// 1 1 1  1 1 1  1 1 1
+    //// 0 0 0  0 0 0  0 0 0
+    //// 1 1 1  1 1 1  1 1 1
+    
+    //where the center grid is the original. but I don't need to create all those 
+    //grids, just the outer edges. so here is how I'll do that:
+
+    console.log(thisGrid);
 
     //do this n times
     for(var i = 0; i <= n; i++){
