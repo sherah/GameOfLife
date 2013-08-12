@@ -7,14 +7,19 @@
   </head>
 
   <body>
-
+    <h1>Sherah's Game of Life</h1>
     <div class="container">
 
       <form class="gameParameters">
         <input type="text" id="numberOfIterations" placeholder="# of iterations"><br>
         <input type="text" id="gridWidth" placeholder="width"><br>
         <input type="text" id="gridHeight" placeholder="height"><br>
-        <input type="text" id="gridValues" placeholder="values, separated by spaces"><br>
+        <div class="gridLines">
+          <div class="lines">
+            <input type="text" class="gridValues" placeholder="line values, separated by spaces"><br>
+          </div>
+          <button id="addAnotherLine">Add Line</button>
+        </div>
         <button id="submit">Generate!</button>
       </form>
 

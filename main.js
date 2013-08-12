@@ -1,5 +1,22 @@
 $(document).ready(function(){
 
+  var thisGrid = [];
+
+  $('#addAnotherLine').click(function(){
+    event.preventDefault();
+
+    if(thisGrid.length > 0){
+      thisGrid.push($(".gridValues" + (thisGrid.length + 1)).val());
+    } else {
+      thisGrid.push($(".gridValues").val());
+    }
+    console.log(thisGrid);
+
+    $('.lines').append("<input type='text' class='gridValues" + (thisGrid.length + 1) + "' placeholder='line values, separated by spaces'><br>");
+
+  });
+
+
   $('#submit').click(function(){
     //prevent the page from refreshing so the result remains visible
     event.preventDefault();
@@ -8,7 +25,7 @@ $(document).ready(function(){
     var numberOfIterations = $('#numberOfIterations').val();
         gridWidth          = $('#gridWidth').val();
         gridHeight         = $('#gridHeight').val();
-        gridValues         = $('#gridValues').val(); //TODO: refactor to accept lines when making compatible with stdin/stdout
+        //gridValues         =  //TODO: refactor to accept lines when making compatible with stdin/stdout
 
     //kick off the algorithm for the game
     var results = runGame(numberOfIterations, gridHeight, gridWidth, gridValues);
