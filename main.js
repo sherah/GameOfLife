@@ -64,7 +64,7 @@ $(document).ready(function(){
 
     //do this n times
     for(var i = 0; i <= n; i++){
-      crazyGrid = getThisIterationCrazyGrid(resultGrid);
+      crazyGrid = getThisIterationCrazyGrid(resultGrid, h, w);
 
       //iterate through the grid:
         //for var j (this row)
@@ -99,16 +99,28 @@ $(document).ready(function(){
     return resultGrid;
   };
 
-  var getThisIterationCrazyGrid = function(rg){
+  var getThisIterationCrazyGrid = function(rg, h, w){
     
     //to put the extra values around the original grid,
     //do some pushing. return the grid to the main function for
     //the game to proceed.
 
+    h = h.length-1;
+    w = w.length-1;
+
     //wip
+    //lower right to upper left
     grid.push(rg[h][w]);
+    //top row
     grid.push(rg[0]);
+    //lower left to upper right
     grid.push(rg[h][0]);
+    
+    //middles and edges
+
+    //upper right to lower left
+
+    //upper left to lower right
 
     return grid;
   };
