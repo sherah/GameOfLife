@@ -99,13 +99,20 @@ $(document).ready(function(){
     return resultGrid;
   };
 
-  var getThisIterationCrazyGrid(rg) = function(){
-      grid.push(rg[h][w]);
-      grid.push(rg[0]);
-      grid.push(rg[h][0]);
+  var getThisIterationCrazyGrid = function(rg){
+    
+    //to put the extra values around the original grid,
+    //do some pushing. return the grid to the main function for
+    //the game to proceed.
+
+    //wip
+    grid.push(rg[h][w]);
+    grid.push(rg[0]);
+    grid.push(rg[h][0]);
 
     return grid;
-  }
+  };
+
 
   var getNeighborValues = function(cgrid, grid, gridIndex){
     //make an array to hold all this index's neighbor 1's and 0's to send back to main function
