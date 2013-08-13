@@ -38,7 +38,7 @@ $(document).ready(function(){
 
   var runGame = function(n, h, w, v){
     var crazyGrid = [];
-        resultGrid = thisGrid;
+        resultGrid = v;
 
     //create a crazyGrid that keeps the values of the surrounding spaces easily.
     //the idea I have going is that, to wrap around the grid, I can surround the
@@ -63,52 +63,53 @@ $(document).ready(function(){
     //works correctly. TODO: this is expensive to keep passing over. think of better way.
 
     //do this n times
-    for(var i = 0; i <= n; i++){
+    //for(var i = 0; i <= n; i++){
       crazyGrid = getThisIterationCrazyGrid(resultGrid, h, w);
 
       //iterate through the grid:
         //for var j (this row)
-        for(var j= 0; j <= h.length - 1; j++){
+    //     for(var j= 0; j <= h.length - 1; j++){
 
-          //for var k (this index)
-          for(var k=0; k <= w.length - 1; k++){
+    //       //for var k (this index)
+    //       for(var k=0; k <= w.length - 1; k++){
 
-            //if this index's value is 0
-            if(parseInt(resultGrid[i]) === 0){
+    //         //if this index's value is 0
+    //         if(parseInt(resultGrid[i]) === 0){
 
-              //get all its neighbor's values
-                var neighbors0 = getNeighborValues(crazyGrid, j, k);
-                //if there are exactly 3 1's, turn this index into a 1
-                if(neighbors0 === 3){
-                  resultGrid[j][k] = 1;
-                }
+    //           //get all its neighbor's values
+    //             var neighbors0 = getNeighborValues(crazyGrid, j, k);
+    //             //if there are exactly 3 1's, turn this index into a 1
+    //             if(neighbors0 === 3){
+    //               resultGrid[j][k] = 1;
+    //             }
 
 
-            } else if(parseInt(resultGrid[i]) === 1) {
+    //         } else if(parseInt(resultGrid[i]) === 1) {
 
-            //if this index's value is 1
-              //get all its neighbor's values
-                var neighbors1 = getNeighborValues(crazyGrid, j, k);
-                //if there are 2 or 3 neighbors, stay a 1
-                if(neighbors1 === 2 || neighbors1 === 3){
-                  resultGrid[j][k] = 1;
-                } else {
-                  //else change to 0
-                  resultGrid[j][k] = 0;
-                }
-            } else {
-              return "error.";
-            }
+    //         //if this index's value is 1
+    //           //get all its neighbor's values
+    //             var neighbors1 = getNeighborValues(crazyGrid, j, k);
+    //             //if there are 2 or 3 neighbors, stay a 1
+    //             if(neighbors1 === 2 || neighbors1 === 3){
+    //               resultGrid[j][k] = 1;
+    //             } else {
+    //               //else change to 0
+    //               resultGrid[j][k] = 0;
+    //             }
+    //         } else {
+    //           return "error.";
+    //         }
 
-          }//k
-        }//j
+    //       }//k
+    //     }//j
 
-    }
+    // }
 
-    return resultGrid;
+    // return resultGrid;
   };
 
   var getThisIterationCrazyGrid = function(rg, h, w){
+    //set up the new grid
     var grid = [];
     
     //to put the extra values around the original grid,
@@ -118,23 +119,26 @@ $(document).ready(function(){
     h = h.length-1;
     w = w.length-1;
 
-    //wip
-
     //populate the first row:
       //lower right to upper left
-      grid[0].push(rg[h][w]);
+      grid.push(rg[h][w]);
       //top row
-      grid[0].concat(rg[h]);
+      //fixing grid.concat(rg[h]);
+      for(var x in rg[h]){
+        grid.push(parseInt(x));
+      }
       //lower left to upper right
-      grid[0].push(rg[h][0]);
-
+      grid.push(rg[h][0]);
 
     //set up the number of remaining rows that will be needed
     for(var i=0; i<=h; i++){
 
       //middles and edges: last first, the original row, first last.
       grid[i+1].push(rg[i][w]);
-      grid[i+1].concat(rg[i]);
+      //fixing grid[i+1].concat(rg[i]);
+      for(var y in rg[i]){
+        grid[i+1].push(parseInt(y));
+      }
       grid[i+1].push(rg[i][0]);
      
     }
@@ -143,10 +147,14 @@ $(document).ready(function(){
       //upper right to lower left
       grid[h].push(rg[0][w]);
       //bottom row
-      grid[h].concat(rg[0]);
+      //fixing grid[h].concat(rg[0]);
+      for(var l in rg[0]){
+        grid[h].push(parseInt(l));
+      }
       //upper left to lower right
       grid[h].push(rg[0][0]);
 
+    console.log("this is the grid: ", grid);
     return grid;
   };
 
