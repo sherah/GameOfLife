@@ -63,98 +63,107 @@ $(document).ready(function(){
     //works correctly. TODO: this is expensive to keep passing over. think of better way.
 
     //do this n times
-    //for(var i = 0; i <= n; i++){
+    for(var i = 0; i <= n; i++){
       crazyGrid = getThisIterationCrazyGrid(resultGrid, h, w);
 
       //iterate through the grid:
         //for var j (this row)
-    //     for(var j= 0; j <= h.length - 1; j++){
+        for(var j= 0; j <= h.length - 1; j++){
 
-    //       //for var k (this index)
-    //       for(var k=0; k <= w.length - 1; k++){
+          //for var k (this index)
+          for(var k=0; k <= w.length - 1; k++){
 
-    //         //if this index's value is 0
-    //         if(parseInt(resultGrid[i]) === 0){
+            //if this index's value is 0
+            if(resultGrid[i] === 0){
 
-    //           //get all its neighbor's values
-    //             var neighbors0 = getNeighborValues(crazyGrid, j, k);
-    //             //if there are exactly 3 1's, turn this index into a 1
-    //             if(neighbors0 === 3){
-    //               resultGrid[j][k] = 1;
-    //             }
+              //get all its neighbor's values
+                var neighbors0 = getNeighborValues(crazyGrid, j, k);
+                //if there are exactly 3 1's, turn this index into a 1
+                if(neighbors0 === 3){
+                  resultGrid[j][k] = 1;
+                }
 
 
-    //         } else if(parseInt(resultGrid[i]) === 1) {
+            } else if(resultGrid[i] === 1) {
 
-    //         //if this index's value is 1
-    //           //get all its neighbor's values
-    //             var neighbors1 = getNeighborValues(crazyGrid, j, k);
-    //             //if there are 2 or 3 neighbors, stay a 1
-    //             if(neighbors1 === 2 || neighbors1 === 3){
-    //               resultGrid[j][k] = 1;
-    //             } else {
-    //               //else change to 0
-    //               resultGrid[j][k] = 0;
-    //             }
-    //         } else {
-    //           return "error.";
-    //         }
+            //if this index's value is 1
+              //get all its neighbor's values
+                var neighbors1 = getNeighborValues(crazyGrid, j, k);
+                //if there are 2 or 3 neighbors, stay a 1
+                if(neighbors1 === 2 || neighbors1 === 3){
+                  resultGrid[j][k] = 1;
+                } else {
+                  //else change to 0
+                  resultGrid[j][k] = 0;
+                }
+            } else {
+              return "error.";
+            }
 
-    //       }//k
-    //     }//j
+          }//k
+        }//j
+    }
 
-    // }
-
-    // return resultGrid;
+    return resultGrid;
   };
 
   var getThisIterationCrazyGrid = function(rg, h, w){
-    //set up the new grid
+        //set up the new grid
     var grid = [];
     
     //to put the extra values around the original grid,
     //do some pushing. return the grid to the main function for
     //the game to proceed.
 
-    h = h.length-1;
-    w = w.length-1;
+    h = h-1;
+    w = w-1;
 
     //populate the first row:
+    var gridFirst = [];
       //lower right to upper left
-      grid.push(rg[h][w]);
+      gridFirst.push(parseInt(rg[h][w]));
+
       //top row
       //fixing grid.concat(rg[h]);
       for(var x in rg[h]){
-        grid.push(parseInt(x));
+        gridFirst.push(parseInt(rg[h][x], 10));
       }
       //lower left to upper right
-      grid.push(rg[h][0]);
+      gridFirst.push(parseInt(rg[h][0]));
+
+    grid.push(gridFirst);
 
     //set up the number of remaining rows that will be needed
     for(var i=0; i<=h; i++){
+      var newRow = [];
 
       //middles and edges: last first, the original row, first last.
-      grid[i+1].push(rg[i][w]);
-      //fixing grid[i+1].concat(rg[i]);
+      newRow.push(parseInt(rg[i][w]));
+
       for(var y in rg[i]){
-        grid[i+1].push(parseInt(y));
+        newRow.push(parseInt(rg[i][y], 10));
       }
-      grid[i+1].push(rg[i][0]);
+
+      newRow.push(parseInt(rg[i][0]));
+
+      //put it all into the crazy grid
+      grid.push(newRow);
      
     }
 
     //finish the last row:
+    var lastRow = [];
       //upper right to lower left
-      grid[h].push(rg[0][w]);
+      lastRow.push(parseInt(rg[0][w]));
       //bottom row
       //fixing grid[h].concat(rg[0]);
       for(var l in rg[0]){
-        grid[h].push(parseInt(l));
+        lastRow.push(parseInt(rg[0][l], 10));
       }
       //upper left to lower right
-      grid[h].push(rg[0][0]);
+      lastRow.push(parseInt(rg[0][0]));
+    grid.push(lastRow);
 
-    console.log("this is the grid: ", grid);
     return grid;
   };
 
