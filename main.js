@@ -100,6 +100,7 @@ $(document).ready(function(){
   };
 
   var getThisIterationCrazyGrid = function(rg, h, w){
+    var grid = [];
     
     //to put the extra values around the original grid,
     //do some pushing. return the grid to the main function for
@@ -109,18 +110,33 @@ $(document).ready(function(){
     w = w.length-1;
 
     //wip
-    //lower right to upper left
-    grid.push(rg[h][w]);
-    //top row
-    grid.push(rg[0]);
-    //lower left to upper right
-    grid.push(rg[h][0]);
-    
-    //middles and edges
 
-    //upper right to lower left
+    //populate the first row:
+      //lower right to upper left
+      grid[0].push(rg[h][w]);
+      //top row
+      grid[0].concat(rg[h]);
+      //lower left to upper right
+      grid[0].push(rg[h][0]);
 
-    //upper left to lower right
+
+    //set up the number of remaining rows that will be needed
+    for(var i=0; i<=h; i++){
+
+      //middles and edges: last first, the original row, first last.
+      grid[i+1].push(rg[i][w]);
+      grid[i+1].concat(rg[i]);
+      grid[i+1].push(rg[i][0]);
+     
+    }
+
+    //finish the last row:
+      //upper right to lower left
+      grid[h].push(rg[0][w]);
+      //bottom row
+      grid[h].concat(rg[0]);
+      //upper left to lower right
+      grid[h].push(rg[0][0]);
 
     return grid;
   };
