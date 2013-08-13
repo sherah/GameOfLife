@@ -65,6 +65,7 @@ $(document).ready(function(){
     //do this n times
     for(var i = 0; i <= n; i++){
       crazyGrid = getThisIterationCrazyGrid(resultGrid, h, w);
+      var neighbors = 0;
 
       //iterate through the grid:
         //for var j (this row)
@@ -72,38 +73,34 @@ $(document).ready(function(){
 
           //for var k (this index)
           for(var k=0; k <= w.length - 1; k++){
+            
+            //get all this square's neighbor values, added together
+            neighbors = getNeighborValues(crazyGrid, j, k);
 
-            //if this index's value is 0
-            if(resultGrid[i] === 0){
 
-              //get all its neighbor's values
-                var neighbors0 = getNeighborValues(crazyGrid, j, k);
+            if(resultGrid[j][k] === 0){ //if this square is a dead 0....
+
                 //if there are exactly 3 1's, turn this index into a 1
-                if(neighbors0 === 3){
+                if(neighbors === 3){
                   resultGrid[j][k] = 1;
                 }
 
+            } else if(resultGrid[j][k] === 1) { //...otherwise, if it's alive....
 
-            } else if(resultGrid[i] === 1) {
-
-            //if this index's value is 1
-              //get all its neighbor's values
-                var neighbors1 = getNeighborValues(crazyGrid, j, k);
                 //if there are 2 or 3 neighbors, stay a 1
-                if(neighbors1 === 2 || neighbors1 === 3){
+                if(neighbors === 2 || neighbors === 3){
                   resultGrid[j][k] = 1;
                 } else {
                   //else change to 0
                   resultGrid[j][k] = 0;
                 }
-            } else {
-              return "error.";
+
             }
 
           }//k
         }//j
     }
-
+    console.log(resultGrid);
     return resultGrid;
   };
 
@@ -168,7 +165,7 @@ $(document).ready(function(){
   };
 
 
-  var getNeighborValues = function(cgrid, grid, row, column){
+  var getNeighborValues = function(cgrid, row, column){
     //make an array to hold all this index's neighbor 1's and 0's to send back to main function
     var neighborCount = 0;
     var r = row+1;
@@ -178,6 +175,8 @@ $(document).ready(function(){
     //add all surrounding values together and return the result count for the game
     //to decide whether to make the square live or die.
     neighborCount += cgrid[r+1][c] + cgrid[r-1][c] + cgrid[r+1][c+1] + cgrid[r+1][c-1] + cgrid[r-1][c+1] + cgrid[r+1][c-1] + cgrid[r][c+1] + cgrid[r][c-1];
+
+    console.log(neighborCount);
 
     return neighborCount;
   };
