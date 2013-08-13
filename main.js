@@ -77,16 +77,25 @@ $(document).ready(function(){
             if(parseInt(resultGrid[i]) === 0){
 
               //get all its neighbor's values
-                var neighbors = getNeighborValues(crazyGrid, resultGrid, resultGrid[j][k]);
+                var neighbors0 = getNeighborValues(crazyGrid, j, k);
                 //if there are exactly 3 1's, turn this index into a 1
+                if(neighbors0 === 3){
+                  resultGrid[j][k] = 1;
+                }
+
 
             } else if(parseInt(resultGrid[i]) === 1) {
 
             //if this index's value is 1
               //get all its neighbor's values
-                var neighbors = getNeighborValues(crazyGrid, resultGrid, resultGrid[j][k]);
+                var neighbors1 = getNeighborValues(crazyGrid, j, k);
                 //if there are 2 or 3 neighbors, stay a 1
-                //else change to 0
+                if(neighbors1 === 2 || neighbors1 === 3){
+                  resultGrid[j][k] = 1;
+                } else {
+                  //else change to 0
+                  resultGrid[j][k] = 0;
+                }
             } else {
               return "error.";
             }
@@ -142,14 +151,18 @@ $(document).ready(function(){
   };
 
 
-  var getNeighborValues = function(cgrid, grid, gridIndex){
+  var getNeighborValues = function(cgrid, grid, row, column){
     //make an array to hold all this index's neighbor 1's and 0's to send back to main function
-    var neighborArray = [];
+    var neighborCount = 0;
+    var r = row+1;
+    var c = column+1;
 
     //here, use the crazyGrid to find the neighbors more easily.
+    //add all surrounding values together and return the result count for the game
+    //to decide whether to make the square live or die.
+    neighborCount += cgrid[r+1][c] + cgrid[r-1][c] + cgrid[r+1][c+1] + cgrid[r+1][c-1] + cgrid[r-1][c+1] + cgrid[r+1][c-1] + cgrid[r][c+1] + cgrid[r][c-1];
 
-    //these are all pushed to the neighborArray and returned:
-    return neighborArray;
+    return neighborCount;
   };
 
   var displayGame = function(r){
